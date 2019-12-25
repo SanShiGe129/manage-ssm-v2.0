@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yun.manageapp.mapper.GoodsoutInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yun.manageapp.domain.entity.GoodsoutInfo">
+    <!--@mbg.generated-->
+    <id column="goodsout_id" jdbcType="BIGINT" property="goodsoutId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="out_cnt" jdbcType="INTEGER" property="outCnt" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="updata_time" jdbcType="TIMESTAMP" property="updataTime" />
+    <result column="is_use" jdbcType="BOOLEAN" property="isUse" />
+    <result column="is_in" jdbcType="BOOLEAN" property="isIn" />
+    <result column="is_delete" jdbcType="BOOLEAN" property="isDelete" />
+    <result column="is_verify" jdbcType="BOOLEAN" property="isVerify" />
+    <result column="in_img" jdbcType="CHAR" property="inImg" />
+    <result column="out_img" jdbcType="CHAR" property="outImg" />
+    <result column="feedback" jdbcType="VARCHAR" property="feedback" />
+  </resultMap>
+
+  <resultMap id="InGoodsInfoResultMap" type="com.yun.manageapp.domain.vo.GoodsInfoVo" extends="com.yun.manageapp.mapper.GoodsInfoMapper.BaseResultMap">
+
+    <association property="goodsoutInfo" resultMap="BaseResultMap" javaType="com.yun.manageapp.domain.entity.GoodsoutInfo" >
+
+    </association>
+  </resultMap>
+
+    <resultMap id="InfoByUserNameIsInResultMap" extends="BaseResultMap" type="com.yun.manageapp.domain.vo.GoodsOutInfoVo">
+
+        <association property="goodsInfo" resultMap="com.yun.manageapp.mapper.GoodsInfoMapper.BaseResultMap">
+
+        </association>
+
+        <association property="userInfo" resultMap="com.yun.manageapp.mapper.UserInfoMapper.BaseResultMap">
+
+        </association>
+    </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    goodsout_id, user_id, goods_id, out_cnt, creat_time, updata_time, is_use, is_in, 
+    is_delete, is_verify, in_img, out_img, feedback
+  </sql>
+
+  <insert id="insertOutGoods">
+    INSERT into goodsout_info(user_id,goods_id,out_cnt,out_img) values(#{userId},#{goodsId},#{outCnt},#{imgSrc});
+  </insert>
+
+
+  <select id="findByUserName" resultMap="InGoodsInfoResultMap">
+
+    SELECT gi.goods_name,gi.goods_number,goi.creat_time,goi.out_cnt,goi.goodsout_id FROM
+      goods_info gi LEFT JOIN
+      goodsout_info goi ON
+      gi.goods_id = goi.goods_id
+    WHERE is_in = 0 AND
+      user_id =
+      (SELECT user_id FROM user_info WHERE user_name = #{userName});
+
+  </select>
+
+  <update id="updataGoodsOutInfo">
+    update goodsout_info set is_in = 1,is_use = #{isUse},out_img = #{outImg} where goodsout_id = #{goodsoutId}
+  </update>
+
+  <update id="updataGoodsNoImg">
+
+    update goodsout_info set is_in = 1,is_use = #{isUse} where goodsout_id = #{goodsoutId}
+
+  </update>
+
+    <select id="findGoodsInfoByUserNameIsIn" resultMap="InfoByUserNameIsInResultMap">
+
+        SELECT goi.is_use,goi.is_verify,goi.is_in,ui.user_name,gi.goods_name FROM
+            goodsout_info goi LEFT JOIN
+            goods_info gi ON
+            goi.goods_id = gi.goods_id LEFT JOIN
+            user_info ui ON ui.user_id = goi.user_id WHERE goi.is_delete = 0 and
+            <if test="userName != null and userName != ''">
+                goi.user_id =
+                (SELECT uifo.user_id FROM user_info uifo WHERE user_name = #{userName}) and
+            </if>
+            <if test="isIn != null and isIn != 3">
+                is_in = #{isIn} and
+            </if>
+            true
+            Limit #{pageIndex},#{pageSize};
+
+    </select>
+
+    <select id="findGoodsInfoByUserNameIsInOfCnt" resultType="java.lang.Integer">
+        SELECT count(ui.user_name) FROM
+        goodsout_info goi LEFT JOIN
+        goods_info gi ON
+        goi.goods_id = gi.goods_id LEFT JOIN
+        user_info ui ON ui.user_id = goi.user_id WHERE goi.is_delete = 0 and
+        <if test="userName != null and userName != ''">
+            goi.user_id =
+            (SELECT uifo.user_id FROM user_info uifo WHERE user_name = #{userName}) and
+        </if>
+        <if test="isIn != null and isIn != 3">
+            is_in = #{isIn} and
+        </if>
+        true
+    </select>
+</mapper>

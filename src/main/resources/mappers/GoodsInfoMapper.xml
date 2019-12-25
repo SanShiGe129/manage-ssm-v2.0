@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yun.manageapp.mapper.GoodsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yun.manageapp.domain.entity.GoodsInfo">
+    <!--@mbg.generated-->
+    <id column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_number" jdbcType="VARCHAR" property="goodsNumber" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="BOOLEAN" property="isDelete" />
+  </resultMap>
+
+  <resultMap id="GoodsNamesResultMap" type="com.yun.manageapp.domain.vo.GoodsNameInfoVo">
+    <result column="goods_name" jdbcType="VARCHAR" property="value" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    goods_id, category_id, goods_name, goods_number, creat_time, update_time, is_delete
+  </sql>
+
+  <select id="findByAllName"  resultMap="GoodsNamesResultMap" resultType="com.yun.manageapp.domain.vo.GoodsNameInfoVo">
+
+    select goods_name from goods_info
+  </select>
+
+  <select id="findGoodsIdByName" resultMap="BaseResultMap" resultType="GoodsInfo">
+      select goods_id from goods_info where goods_name = #{name};
+  </select>
+
+</mapper>

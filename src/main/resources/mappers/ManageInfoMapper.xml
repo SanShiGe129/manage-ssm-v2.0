@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yun.manageapp.mapper.ManageInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yun.manageapp.domain.entity.ManageInfo">
+    <!--@mbg.generated-->
+    <id column="manage_id" jdbcType="BIGINT" property="manageId" />
+    <result column="manage_name" jdbcType="VARCHAR" property="manageName" />
+    <result column="manage_phone" jdbcType="VARCHAR" property="managePhone" />
+    <result column="is_use" jdbcType="BOOLEAN" property="isUse" />
+    <result column="is_delete" jdbcType="BOOLEAN" property="isDelete" />
+    <result column="is_super" jdbcType="BOOLEAN" property="isSuper" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    manage_id, manage_name, manage_phone, is_use, is_delete, is_super, creat_time
+  </sql>
+
+  <select id="getAllManage" resultMap="BaseResultMap" resultType="ManageInfo">
+
+    select manage_id,manage_name,manage_phone,is_super,is_use from manage_info where is_delete = 1;
+
+  </select>
+
+  <select id="getUseManage" resultMap="BaseResultMap">
+
+    select manage_name from manage_info where is_delete = 1 and is_use = 1;
+
+  </select>
+
+  <update id="updataManaIsUse">
+
+    update  manage_info set is_use = 1 where manage_id = #{manageId};
+
+  </update>
+
+  <update id="updataManaNoIsUse">
+
+    update  manage_info set is_use = 0 where manage_id = #{manageId};
+
+  </update>
+
+  <insert id="uploadManaInfo">
+
+    insert into manage_info(manage_name) values (#{manageName});
+
+  </insert>
+
+
+
+</mapper>

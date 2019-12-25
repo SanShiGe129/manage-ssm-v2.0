@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yun.manageapp.mapper.StockMapper">
+  <resultMap id="BaseResultMap" type="com.yun.manageapp.domain.entity.Stock">
+    <!--@mbg.generated-->
+    <id column="stock_id" jdbcType="BIGINT" property="stockId" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="stock_value" jdbcType="INTEGER" property="stockValue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    stock_id, goods_id, stock_value
+  </sql>
+
+
+</mapper>
