@@ -71,7 +71,7 @@
 
     <select id="findGoodsInfoByUserNameIsIn" resultMap="InfoByUserNameIsInResultMap">
 
-        SELECT goi.is_use,goi.is_verify,goi.is_in,ui.user_name,gi.goods_name FROM
+        SELECT goi.goodsout_id,goi.is_use,goi.is_verify,goi.is_in,ui.user_name,gi.goods_name FROM
             goodsout_info goi LEFT JOIN
             goods_info gi ON
             goi.goods_id = gi.goods_id LEFT JOIN

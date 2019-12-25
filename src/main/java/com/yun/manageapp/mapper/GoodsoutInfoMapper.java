@@ -75,7 +75,7 @@ public interface GoodsoutInfoMapper {
      *
      * @param userName 管理员查询页面的用户名
      * @param isIn  管理员查询页面的是否入库页面
-     * @param pageIndex 分页的起始页
+     * @param pageIndex 分页的开始下标
      * @param pageSize 分页的数量
      * @return goodsInfoVo
      */
@@ -97,6 +97,7 @@ public interface GoodsoutInfoMapper {
     Integer findGoodsInfoByUserNameIsInOfCnt(@Param("userName") String userName,
                                              @Param("isIn") Integer isIn
     );
+
 
 
 
