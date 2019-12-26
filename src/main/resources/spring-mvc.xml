@@ -37,5 +37,5 @@
     </mvc:annotation-driven>
 
     <!--<mvc:resources location="/WEB-INF/images/" mapping="/images/*" />-->
-    <mvc:resources location="WEB-INF/images/" mapping="/images/**" />
+    <mvc:resources location="/WEB-INF/images/" mapping="/images/**" />
 </beans>

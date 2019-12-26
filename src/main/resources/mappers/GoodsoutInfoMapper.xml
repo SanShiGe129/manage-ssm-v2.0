@@ -36,6 +36,13 @@
         </association>
     </resultMap>
 
+    <resultMap id="findDetailOutGoodsById" type="com.yun.manageapp.domain.vo.ShowDetailInfoVo" extends="BaseResultMap">
+
+        <association property="goodsInfo" resultMap="com.yun.manageapp.mapper.GoodsInfoMapper.BaseResultMap">
+
+        </association>
+    </resultMap>
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     goodsout_id, user_id, goods_id, out_cnt, creat_time, updata_time, is_use, is_in, 
@@ -43,7 +50,9 @@
   </sql>
 
   <insert id="insertOutGoods">
+
     INSERT into goodsout_info(user_id,goods_id,out_cnt,out_img) values(#{userId},#{goodsId},#{outCnt},#{imgSrc});
+
   </insert>
 
 
@@ -85,7 +94,6 @@
             </if>
             true
             Limit #{pageIndex},#{pageSize};
-
     </select>
 
     <select id="findGoodsInfoByUserNameIsInOfCnt" resultType="java.lang.Integer">
@@ -103,4 +111,23 @@
         </if>
         true
     </select>
+
+    <select id="findDetailOutGoodsById" resultMap="findDetailOutGoodsById">
+
+          select gi.goods_name,goods_number,is_verify,goi.creat_time,goi.updata_time,goi.out_img,goi.in_img from
+          goodsout_info goi left join goods_info gi on
+          gi.goods_id = goi.goods_id where
+          goodsout_id = #{gooodsOutId};
+
+    </select>
+
+    <update id="uploadIsVerify">
+
+        update goodsout_info set
+        is_verify = 1 where
+        goodsout_id = #{gooodsOutId};
+
+    </update>
+
+
 </mapper>

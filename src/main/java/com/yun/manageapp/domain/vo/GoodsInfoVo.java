@@ -5,6 +5,7 @@ import com.yun.manageapp.domain.entity.Stock;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class GoodsInfoVo {
@@ -50,5 +51,6 @@ public class GoodsInfoVo {
      * 库存
      *
      */
+    private List<Stock> stock;
 
 }

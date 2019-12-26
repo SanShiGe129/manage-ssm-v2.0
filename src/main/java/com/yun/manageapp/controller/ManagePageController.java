@@ -2,6 +2,7 @@ package com.yun.manageapp.controller;
 
 import com.yun.manageapp.domain.entity.ManageInfo;
 import com.yun.manageapp.domain.vo.ShowAllInfoVo;
+import com.yun.manageapp.domain.vo.ShowDetailInfoVo;
 import com.yun.manageapp.service.ManagepageService;
 import com.yun.manageapp.util.Result;
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sun.rmi.runtime.Log;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -165,6 +167,42 @@ public class ManagePageController {
 
         }
 
+        return temp;
+    }
+
+    @GetMapping("/showDetailInfos")
+    public Object showDetailInfos(@RequestParam("goodsOutInfoId") String goodsOutInfoId) {
+
+        Object temp;
+
+        try {
+            Long goodsOutInfoIdL = Long.parseLong(goodsOutInfoId);
+            ShowDetailInfoVo goodsOutInfos = managepageService.findGoodsDetailById(goodsOutInfoIdL);
+            temp = Result.success(goodsOutInfos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            temp = Result.error();
+        }
+
+        return temp;
+    }
+    
+    @GetMapping("/uploadIsVerify")
+    public Object uploadIsVerify(@RequestParam("goodsOutInfoId") String goodsoutId) {
+
+        Object temp;
+
+        try {
+
+            Long goodsoutIdL = Long.parseLong(goodsoutId);
+            Integer cnt = managepageService.upDataIsVerify(goodsoutIdL);
+
+            temp = Result.success(cnt);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            temp = Result.error();
+        }
         return temp;
     }
 }

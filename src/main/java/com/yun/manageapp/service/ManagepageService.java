@@ -3,6 +3,8 @@ package com.yun.manageapp.service;
 import com.yun.manageapp.domain.entity.ManageInfo;
 import com.yun.manageapp.domain.vo.GoodsOutInfoVo;
 import com.yun.manageapp.domain.vo.ShowAllInfoVo;
+import com.yun.manageapp.domain.vo.ShowDetailInfoVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,5 +72,22 @@ public interface ManagepageService {
      * @return
      */
     Integer uploadmanageInfo(String manageName);
+
+    /**
+     * 根据goodsoutId查询详情信息,功能是在详情页面输出物品的详情信息!
+     *
+     * @param goodsoutId 出库页面的id
+     * @return ShowDetailInfoVo
+     *
+     */
+    ShowDetailInfoVo findGoodsDetailById(Long goodsoutId);
+
+    /**
+     * 根据goodsId修改is_verify字段,
+     * @param goodsoutId 管理员页面的id值
+     * @return 受影响的行数
+     * 
+     */
+    Integer upDataIsVerify(Long goodsoutId);
 
 }

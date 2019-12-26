@@ -1,9 +1,11 @@
 package com.yun.manageapp.service.impl;
 
 import com.yun.manageapp.config.PageCapacity;
+import com.yun.manageapp.domain.entity.GoodsoutInfo;
 import com.yun.manageapp.domain.entity.ManageInfo;
 import com.yun.manageapp.domain.vo.GoodsOutInfoVo;
 import com.yun.manageapp.domain.vo.ShowAllInfoVo;
+import com.yun.manageapp.domain.vo.ShowDetailInfoVo;
 import com.yun.manageapp.mapper.GoodsoutInfoMapper;
 import com.yun.manageapp.mapper.ManageInfoMapper;
 import com.yun.manageapp.service.ManagepageService;
@@ -84,6 +86,22 @@ public class ManagepageServiceImpl implements ManagepageService {
     public Integer uploadmanageInfo(String manageName) {
 
         Integer cnt = manageInfoMapper.uploadManaInfo(manageName);
+
+        return cnt;
+    }
+
+    @Override
+    public ShowDetailInfoVo findGoodsDetailById(Long goodsoutId) {
+
+        ShowDetailInfoVo outGoodsInfos = goodsoutInfoMapper.findDetailOutGoodsById(goodsoutId);
+
+        return outGoodsInfos;
+    }
+
+    @Override
+    public Integer upDataIsVerify(Long goodsoutId) {
+
+        Integer cnt = goodsoutInfoMapper.uploadIsVerify(goodsoutId);
 
         return cnt;
     }

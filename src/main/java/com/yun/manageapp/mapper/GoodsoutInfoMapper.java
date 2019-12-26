@@ -1,8 +1,8 @@
 package com.yun.manageapp.mapper;
 
-
 import com.yun.manageapp.domain.vo.GoodsInfoVo;
 import com.yun.manageapp.domain.vo.GoodsOutInfoVo;
+import com.yun.manageapp.domain.vo.ShowDetailInfoVo;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -98,8 +98,21 @@ public interface GoodsoutInfoMapper {
                                              @Param("isIn") Integer isIn
     );
 
+    /**
+     *
+     * 根据goodsOutId查询物品的详情.
+     * @param goodsOutId  管理员页面的物品id值
+     * @return GoodsoutInfo
+     *
+     */
+    ShowDetailInfoVo findDetailOutGoodsById(@Param("gooodsOutId") Long goodsOutId);
 
-
-
-
+    /**
+     *
+     * 根据goodsId修改is_verify字段,功能是管理员进行审核
+     *
+     * @param goodsOutId 管理员页面的id值
+     * @return 受影响的行数
+     */
+    Integer uploadIsVerify(@Param("gooodsOutId") Long goodsOutId);
 }

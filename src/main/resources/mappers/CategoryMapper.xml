@@ -6,55 +6,27 @@
     <id column="category_id" jdbcType="BIGINT" property="categoryId" />
     <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
   </resultMap>
+
+  <resultMap id="ShowAllCategory" type="com.yun.manageapp.domain.vo.CategoryVo" extends="BaseResultMap">
+
+    <association property="goodsInfoVo" resultMap="com.yun.manageapp.mapper.GoodsInfoMapper.GoodsAllResultMap">
+
+    </association>
+
+  </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     category_id, category_name
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    <include refid="Base_Column_List" />
-    from category
-    where category_id = #{categoryId,jdbcType=BIGINT}
+
+  <select id="findAllGoodsInfo" resultMap="ShowAllCategory">
+
+      select c.category_id,c.category_name,g.goods_id,g.goods_name,g.goods_number,g.is_delete,s.stock_value
+      from category c left join
+      goods_info g on
+      c.category_id = g.category_id left join
+      stock s on g.goods_id = s.goods_id
+
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    <!--@mbg.generated-->
-    delete from category
-    where category_id = #{categoryId,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" keyColumn="category_id" keyProperty="categoryId" parameterType="com.yun.manageapp.domain.entity.Category" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into category (category_name)
-    values (#{categoryName,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" keyColumn="category_id" keyProperty="categoryId" parameterType="com.yun.manageapp.domain.entity.Category" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into category
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="categoryName != null">
-        category_name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="categoryName != null">
-        #{categoryName,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yun.manageapp.domain.entity.Category">
-    <!--@mbg.generated-->
-    update category
-    <set>
-      <if test="categoryName != null">
-        category_name = #{categoryName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where category_id = #{categoryId,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yun.manageapp.domain.entity.Category">
-    <!--@mbg.generated-->
-    update category
-    set category_name = #{categoryName,jdbcType=VARCHAR}
-    where category_id = #{categoryId,jdbcType=BIGINT}
-  </update>
+
 </mapper>
